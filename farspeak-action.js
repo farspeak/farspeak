@@ -10,27 +10,36 @@ import puppeteer from 'puppeteer';
 import fsPromises from 'fs/promises';
 import PDFDocument from 'pdfkit';
 
+import OpenAI from 'openai';
+
+
 // Farspeak setup
 const program = new Command();
 program
   .option('--action <path>', 'Path to the YAML file containing the action instructions')
+  .option('--query <string>', 'Query to inquire from Farspeak')
   .parse(process.argv);
 
 const options = program.opts();
 
 if (!options.action) {
-  console.error('Error: --action <farspeak.yaml> is required');
+  console.error('Error: --action <farspeak.yaml> and --query are both required');
   process.exit(1);
 }
 
 // Farspeak setup
 const farspeak = new Farspeak({
-    app: 'test2', // your app name
-    env: 'dev', // your app env
-    backendToken: 'sa79iett7le564', // paste your backend token
-  });
+  app: 'test2', // your app name
+  env: 'dev', // your app env
+  backendToken: 'sa79iett7le564', // paste your backend token
+});
 
 const entityName = 'insights';
+
+// OpenAI setup
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
+});
 
 // Get the current file path and directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -40,18 +49,25 @@ const __dirname = path.dirname(__filename);
 const actionFilePath = path.resolve(__dirname, options.action);
 const { report, parameters } = YAML.load(actionFilePath);
 
-// Function to scrape website and return content
-async function scrapeWebsite(url) {
+// Function to scrape website and return content using OpenAI
+async function scrapeWebsite(url, prompt) {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle0' });
 
     // Scrape the content (simplified example)
-    const content = await page.evaluate(() => document.body.innerText);
+    const scrapedContent = await page.evaluate(() => document.body.innerText);
+
+    // Use OpenAI to process the scraped content based on the prompt
+    const response = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: `${prompt}\n\nContent:\n${scrapedContent}`,
+      max_tokens: 500,
+    });
 
     await browser.close();
-    return content;
+    return response.data.choices[0].text.trim();
   } catch (error) {
     console.error(`Error scraping ${url}: ${error.message}`);
   }
@@ -78,7 +94,7 @@ async function createPDF(contents, outputPath) {
 
   for (const parameter of parameters) {
     for (const source of parameter.sources) {
-      const content = await scrapeWebsite(source);
+      const content = await scrapeWebsite(source, parameter.prompt);
       contents.push(content);
     }
   }
@@ -96,4 +112,11 @@ async function createPDF(contents, outputPath) {
 
   console.log(doc);
   console.log(entity);
+
+  if (options.query) {
+    farspeak
+      .entity(entityName)
+      .inquire(options.query)
+      .then(console.log);
+  }
 })();
