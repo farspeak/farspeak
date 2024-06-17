@@ -1,10 +1,10 @@
 report:
   product: 
-    - name: Product XYZ
+    - topic: Product XYZ
       category: Electronics
 
 parameters:
-  - name: Product Specifications
+  - action: Product Specifications
     details:
       - Technical Specifications
         - Dimensions
@@ -25,7 +25,7 @@ parameters:
       - https://www.techradar.com
       - https://www.cnet.com
 
-  - name: Market Comparison
+  - action: Market Comparison
     details:
       - Competitor Analysis
         - Competitor A
@@ -43,7 +43,7 @@ parameters:
       - https://www.amazon.com
       - https://www.bestbuy.com
 
-  - name: Customer Reviews and Ratings
+  - action: Customer Reviews and Ratings
     details:
       - User Feedback
         - Positive Reviews
@@ -58,7 +58,7 @@ parameters:
       - https://www.productwebsite.com
       - https://www.techradar.com
 
-  - name: Sales Channels
+  - action: Sales Channels
     details:
       - Online Retailers
         - Amazon
@@ -75,7 +75,7 @@ parameters:
       - https://www.ebay.com
       - https://www.productwebsite.com
 
-  - name: Product Availability
+  - action: Product Availability
     details:
       - Stock Levels
         - Online Availability
@@ -92,7 +92,7 @@ parameters:
       - https://www.bestbuy.com
       - https://www.euronics.com
 
-  - name: Marketing and Advertising
+  - action: Marketing and Advertising
     details:
       - Campaigns
         - Online Campaigns
@@ -109,7 +109,7 @@ parameters:
       - https://www.twitter.com/ProductXYZ
       - https://www.instagram.com/ProductXYZ
 
-  - name: Regulatory Compliance
+  - action: Regulatory Compliance
     details:
       - Certifications
         - CE

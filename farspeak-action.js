@@ -12,7 +12,6 @@ import PDFDocument from 'pdfkit';
 
 import OpenAI from 'openai';
 
-
 // Farspeak setup
 const program = new Command();
 program
@@ -38,7 +37,7 @@ const entityName = 'insights';
 
 // OpenAI setup
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
+  apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
 });
 
 // Get the current file path and directory name
@@ -47,18 +46,26 @@ const __dirname = path.dirname(__filename);
 
 // Load the action instructions from the YAML file
 const actionFilePath = path.resolve(__dirname, options.action);
-const { report, parameters } = YAML.load(actionFilePath);
+const data = YAML.load(actionFilePath);
+
+// Check if the data structure is correct
+if (!data || !Array.isArray(data.parameters)) {
+  console.error('Error: The YAML file should contain an array of parameters.');
+  process.exit(1);
+}
+
+const outputPath = path.resolve(__dirname, 'output.pdf');
+const contents = [];
 
 // Function to scrape website and return content using OpenAI
 async function scrapeWebsite(url, prompt) {
   try {
-  
     // Use OpenAI to process the scraped content based on the prompt
     const chatCompletion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [{"role": "user", "content": prompt}],
-      });
-      console.log(chatCompletion.choices[0].message);
+      model: "gpt-3.5-turbo",
+      messages: [{ "role": "user", "content": prompt }],
+    });
+    console.log(chatCompletion.choices[0].message);
 
     return chatCompletion.choices[0].message;
   } catch (error) {
@@ -82,19 +89,24 @@ async function createPDF(contents, outputPath) {
 }
 
 (async () => {
-  const outputPath = path.resolve(__dirname, 'output.pdf');
-  const contents = [];
+  for (const parameter of data.parameters) {
+    const { action, details, prompts, sources } = parameter;
 
-  for (const parameter of parameters) {
-    console.log("Parameter:" + parameter + " - Prompt: " + parameter.prompt)
-    for (const source of parameter.sources) {
-        if (parameter.prompt != null){
-            const content = await scrapeWebsite(source, parameter.prompt);
-            contents.push(content);
-        } else{
-            const content = await scrapeWebsite(source, "How are you?");
-            contents.push(content);
-        } 
+    // Validate the structure
+    if (!Array.isArray(prompts) || !Array.isArray(sources)) {
+      console.error('Error: "prompts" and "sources" should be arrays.');
+      continue;
+    }
+
+    // Generate queries based on prompts and sources
+    for (const prompt of prompts) {
+      for (const source of sources) {
+        const query = `${prompt} (Action: ${action}, Details: ${details.join(', ')}, Source: ${source})`;
+        const content = await scrapeWebsite(source, query);
+        if (content) {
+          contents.push(content);
+        }
+      }
     }
   }
 
@@ -105,7 +117,7 @@ async function createPDF(contents, outputPath) {
   const doc = await farspeak
     .entity(entityName)
     .fromDocument({ filePath: outputPath });
-  
+
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const entity = await farspeak.entity(entityName).get(doc.id);
 
