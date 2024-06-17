@@ -52,22 +52,15 @@ const { report, parameters } = YAML.load(actionFilePath);
 // Function to scrape website and return content using OpenAI
 async function scrapeWebsite(url, prompt) {
   try {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle0' });
-
-    // Scrape the content (simplified example)
-    const scrapedContent = await page.evaluate(() => document.body.innerText);
-
+  
     // Use OpenAI to process the scraped content based on the prompt
-    const response = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt: `${prompt}\n\nContent:\n${scrapedContent}`,
-      max_tokens: 500,
-    });
+    const chatCompletion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "user", "content": prompt}],
+      });
+      console.log(chatCompletion.choices[0].message);
 
-    await browser.close();
-    return response.data.choices[0].text.trim();
+    return chatCompletion.choices[0].message;
   } catch (error) {
     console.error(`Error scraping ${url}: ${error.message}`);
   }
@@ -93,9 +86,15 @@ async function createPDF(contents, outputPath) {
   const contents = [];
 
   for (const parameter of parameters) {
+    console.log("Parameter:" + parameter + " - Prompt: " + parameter.prompt)
     for (const source of parameter.sources) {
-      const content = await scrapeWebsite(source, parameter.prompt);
-      contents.push(content);
+        if (parameter.prompt != null){
+            const content = await scrapeWebsite(source, parameter.prompt);
+            contents.push(content);
+        } else{
+            const content = await scrapeWebsite(source, "How are you?");
+            contents.push(content);
+        } 
     }
   }
 
