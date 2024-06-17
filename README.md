@@ -1,4 +1,4 @@
-# Farspeak: YAML to AI
+# Farspeak: YAML to AI / Config For AIs
 
 Welcome to Farspeak: YAML to AI! 
 This repository allows you to easily transform structured YAML files into a comprehensive knowledge base using web scrapers and tools, then store this data in MongoDB Atlas. With the Farspeak NPM package, you can build applications quickly and efficiently.
@@ -6,8 +6,8 @@ This repository allows you to easily transform structured YAML files into a comp
 ## Features
 * YAML Parsing: Convert detailed YAML files into actionable data.
 * Web Scraping: Use scrapers to gather information from specified sources.
-* Knowledge Base Generation: Store and manage your data in MongoDB Atlas (other databases are coming, too)
-* Farspeak NPM: A robust package for JavaScript and TypeScript developers to build smart apps that utilize the knowledge base.
+* Knowledge Base Generation: Store and manage your insight data in MongoDB Atlas (other databases are coming!)
+* Farspeak NPM: A robust package for JavaScript and TypeScript developers to build smart apps.
   
 ## Getting Started
 
