@@ -1,0 +1,127 @@
+report:
+  product: 
+    - name: Product XYZ
+      category: Electronics
+
+parameters:
+  - name: Product Specifications
+    details:
+      - Technical Specifications
+        - Dimensions
+        - Weight
+        - Battery Life
+        - Processor
+        - Memory
+        - Storage
+      - Features
+        - Unique Selling Points
+        - Special Functions
+        - Supported Formats
+    prompts:
+      - "What are the technical specifications of Product XYZ?"
+      - "List the unique features of Product XYZ."
+    sources:
+      - https://www.productwebsite.com
+      - https://www.techradar.com
+      - https://www.cnet.com
+
+  - name: Market Comparison
+    details:
+      - Competitor Analysis
+        - Competitor A
+        - Competitor B
+        - Competitor C
+      - Pricing Comparison
+        - Competitor A Pricing
+        - Competitor B Pricing
+        - Competitor C Pricing
+    prompts:
+      - "How does Product XYZ compare to Competitor A, B, and C?"
+      - "What are the pricing differences between Product XYZ and its competitors?"
+    sources:
+      - https://www.productwebsite.com
+      - https://www.amazon.com
+      - https://www.bestbuy.com
+
+  - name: Customer Reviews and Ratings
+    details:
+      - User Feedback
+        - Positive Reviews
+        - Negative Reviews
+      - Expert Reviews
+        - Summary of Expert Opinions
+    prompts:
+      - "What are the common positive and negative feedback from customers about Product XYZ?"
+      - "Summarize the expert reviews of Product XYZ."
+    sources:
+      - https://www.amazon.com
+      - https://www.productwebsite.com
+      - https://www.techradar.com
+
+  - name: Sales Channels
+    details:
+      - Online Retailers
+        - Amazon
+        - eBay
+        - Product Website
+      - Offline Retailers
+        - Major Retail Chains
+        - Specialty Stores
+    prompts:
+      - "Where can Product XYZ be purchased online?"
+      - "Which offline retailers carry Product XYZ?"
+    sources:
+      - https://www.amazon.com
+      - https://www.ebay.com
+      - https://www.productwebsite.com
+
+  - name: Product Availability
+    details:
+      - Stock Levels
+        - Online Availability
+        - In-store Availability
+      - Regional Availability
+        - North America
+        - Europe
+        - Asia
+    prompts:
+      - "What are the current stock levels of Product XYZ?"
+      - "Is Product XYZ available in North America, Europe, and Asia?"
+    sources:
+      - https://www.productwebsite.com
+      - https://www.bestbuy.com
+      - https://www.euronics.com
+
+  - name: Marketing and Advertising
+    details:
+      - Campaigns
+        - Online Campaigns
+        - Offline Campaigns
+      - Social Media Presence
+        - Facebook
+        - Twitter
+        - Instagram
+    prompts:
+      - "What marketing campaigns have been launched for Product XYZ?"
+      - "Describe the social media presence of Product XYZ."
+    sources:
+      - https://www.facebook.com/ProductXYZ
+      - https://www.twitter.com/ProductXYZ
+      - https://www.instagram.com/ProductXYZ
+
+  - name: Regulatory Compliance
+    details:
+      - Certifications
+        - CE
+        - FCC
+        - RoHS
+      - Legal Requirements
+        - Safety Standards
+        - Environmental Regulations
+    prompts:
+      - "What certifications does Product XYZ have?"
+      - "List the safety and environmental regulations Product XYZ complies with."
+    sources:
+      - https://www.productwebsite.com
+      - https://www.fcc.gov
+      - https://www.ce-mark.com
