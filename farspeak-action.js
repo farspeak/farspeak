@@ -28,9 +28,9 @@ if (!options.action || !options.query) {
 
 // Farspeak setup
 const farspeak = new Farspeak({
-  app: 'test2', // your app name
-  env: 'dev', // your app env
-  backendToken: 'sa79iett7le564', // paste your backend token
+  app: '', // your app name
+  env: '', // your app env
+  backendToken: '', // paste your backend token
 });
 
 const entityName = 'insights';
