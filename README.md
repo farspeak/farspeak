@@ -1,6 +1,6 @@
-# Farspeak: YAML to AI / Config For AIs
+# Template to Worfklows / Reports
 
-Welcome to Farspeak: YAML to AI! 
+Welcome to Template to Worfklows / Reports.
 This repository allows you to easily transform structured YAML files into a comprehensive knowledge base using web scrapers and tools, then store this data in MongoDB Atlas. With the Farspeak NPM package, you can build applications quickly and efficiently.
 
 ## Features
