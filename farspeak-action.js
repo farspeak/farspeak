@@ -33,6 +33,16 @@ const farspeak = new Farspeak({
   backendToken: '', // paste your backend token
 });
 
+// or this if you want to use your Atlas
+
+//const farspeak = new Farspeak({
+//  app: "your-app", // your app name
+//  env: "dev", // your app env
+//  backendToken: "..", // paste your backend token
+//  publicKey: "fs-pub-...",
+//  secretKey: "fs-...",
+//  vectorIndexName: "...",
+// });
 const entityName = 'insights';
 
 // OpenAI setup
