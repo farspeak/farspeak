@@ -17,9 +17,23 @@ This repository allows you to easily transform structured YAML files into a comp
 * NPM (v6.x or later)
 
 ### Installation
-* Clone the Repository
-* Install Dependencies
-* Get MongoDB Atlas connection string
+* Clone the Repository & install the dependencies (npm install)
+* Add MongoDB Atlas connection string in Settings (farspeak.ai)
+* Configure Farspeak in farspeak-actions.js (farspeak.ai)    
+
+    ```
+    // Farspeak setup
+    const farspeak = new Farspeak({
+      app: 'test2', // your app name
+      env: 'dev', // your app env
+      backendToken: '',
+      publicKey: "fs-..",
+      secretKey: "fs-..", // paste your backend token
+      vectorIndexName: ".."
+    });
+    ```
+You can learn more here: [farspeak client](https://github.com/farspeak/farspeak-js)  
+
 * Create farspeak.yaml. Here is an example:
 
 ```
