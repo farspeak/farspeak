@@ -19,6 +19,10 @@ This repository allows you to easily transform structured YAML files into a comp
 ### Installation
 * Clone the Repository & install the dependencies (npm install)
 * Add MongoDB Atlas connection string in Settings (farspeak.ai)
+* Create the vector search index for your db.entities (you need the entities collection).
+
+That's how you do it: [Create Vector Search Index](https://github.com/farspeak/farspeak-js/wiki/Create-Vector-Search-Index-in-Atlas)
+  
 * Configure Farspeak in farspeak-actions.js (farspeak.ai)    
 
     ```
