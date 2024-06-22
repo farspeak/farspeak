@@ -68,7 +68,7 @@ const outputPath = path.resolve(__dirname, 'output.pdf');
 const contents = [];
 
 // Function to scrape website and return content using OpenAI
-async function scrapeWebsite(url, prompt) {
+async function completion(url, prompt) {
   try {
     // Use OpenAI to process the scraped content based on the prompt
     const chatCompletion = await openai.chat.completions.create({
@@ -119,7 +119,7 @@ async function createPDF(contents, outputPath) {
     for (const prompt of prompts) {
       const query = `${initialQuery} ${prompt} (Action: ${action}, Details: ${details.join(', ')}. Sources: ${sourcesString})`;
       //console.log(`Query: ${query}`);
-      const content = await scrapeWebsite(sources[0], query); // Use the first source for the scrapeWebsite call
+      const content = await completion(sources[0], query); // Use the first source for the completion call
       if (content) {
         contents.push(content);
       }
