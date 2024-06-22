@@ -52,8 +52,12 @@ Parameters:
 * Run farspeak-action.js (you need to get your FARSPEAK_API_KEY from farspeak.ai)
 
 ```
-./farspeak-action.js --action farspeak.yaml --token FARSPEAK_API_KEY
+./farspeak-action.js --action <ANY YAML TEMPLATE> --token FARSPEAK_API_KEY
+
+Example: 
+./farspeak-action.js --action templates/product/farspeak.product.1.yaml --token FARSPEAK_API_KEY
 ```
+You can find many templates in the templates/ directory.
 
 * Build your smart app. Here's an example: https://github.com/farspeak/nextjs-example
 
