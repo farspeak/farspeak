@@ -28,13 +28,9 @@ parameters:
   - action: Market Comparison
     details:
       - Competitor Analysis
-        - Competitor A
-        - Competitor B
-        - Competitor C
+        - Competitors
       - Pricing Comparison
-        - Competitor A Pricing
-        - Competitor B Pricing
-        - Competitor C Pricing
+        - Competitors pricing
     prompts:
       - "How does this product compare to its competitors?"
       - "What are the pricing differences between the product and its competitors?"

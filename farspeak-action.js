@@ -21,7 +21,7 @@ program
 
 const options = program.opts();
 
-if (!options.action) {
+if (!options.action || !options.query) {
   console.error('Error: --action <farspeak.yaml> and --query are both required');
   process.exit(1);
 }
@@ -65,9 +65,11 @@ async function scrapeWebsite(url, prompt) {
       model: "gpt-3.5-turbo",
       messages: [{ "role": "user", "content": prompt }],
     });
-    console.log(chatCompletion.choices[0].message);
 
-    return chatCompletion.choices[0].message;
+    const messageContent = chatCompletion.choices[0].message.content;
+    console.log(messageContent);
+
+    return messageContent;
   } catch (error) {
     console.error(`Error scraping ${url}: ${error.message}`);
   }
@@ -89,6 +91,8 @@ async function createPDF(contents, outputPath) {
 }
 
 (async () => {
+  const initialQuery = options.query;
+
   for (const parameter of data.parameters) {
     const { action, details, prompts, sources } = parameter;
 
@@ -98,14 +102,16 @@ async function createPDF(contents, outputPath) {
       continue;
     }
 
-    // Generate queries based on prompts and sources
+    // Concatenate sources into a single string
+    const sourcesString = sources.join(', ');
+
+    // Generate a single query based on each prompt with all sources concatenated
     for (const prompt of prompts) {
-      for (const source of sources) {
-        const query = `${prompt} (Action: ${action}, Details: ${details.join(', ')}, Source: ${source})`;
-        const content = await scrapeWebsite(source, query);
-        if (content) {
-          contents.push(content);
-        }
+      const query = `${initialQuery} ${prompt} (Action: ${action}, Details: ${details.join(', ')}. Sources: ${sourcesString})`;
+      //console.log(`Query: ${query}`);
+      const content = await scrapeWebsite(sources[0], query); // Use the first source for the scrapeWebsite call
+      if (content) {
+        contents.push(content);
       }
     }
   }
@@ -121,7 +127,7 @@ async function createPDF(contents, outputPath) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   const entity = await farspeak.entity(entityName).get(doc.id);
 
-  console.log(doc);
+  //console.log(doc);
   console.log(entity);
 
   if (options.query) {
